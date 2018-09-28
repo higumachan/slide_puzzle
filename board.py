@@ -9,7 +9,7 @@ class Direction(Enum):
     Right = (0, 1)
 
 
-class ZoblistHash:
+class ZobristHash:
     def __init__(self, w, h):
         self.table = np.random.randint(0, 1 << 63, (w * h, w * h, w * h), dtype=np.uint64)
 
@@ -25,7 +25,7 @@ class Board:
         index = (self.board == target_number).argmax()
         self.target = np.array((index % w, index // w))
         if hasher is None:
-            self.hasher = ZoblistHash(w, h)
+            self.hasher = ZobristHash(w, h)
         else:
             self.hasher = hasher
         self.target_number = target_number
@@ -50,7 +50,7 @@ class Board:
 
 if __name__ == '__main__':
     np.random.seed(100)
-    z = ZoblistHash(3, 3)
+    z = ZobristHash(3, 3)
     board = Board([0, 1, 2 ,3, 4, 5, 6, 7, 8], 3, 3, 4, z)
     board.print_board()
     print(hash(board))

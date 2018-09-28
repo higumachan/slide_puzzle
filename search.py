@@ -1,5 +1,5 @@
 import copy
-from board import Board, Direction, ZoblistHash
+from board import Board, Direction, ZobristHash
 from evaluator import ManhattanEvaluator
 
 class BeamSearch:
@@ -36,7 +36,7 @@ class BeamSearch:
 
 if __name__ == '__main__':
     w, h = 5, 5
-    z = ZoblistHash(w, h)
+    z = ZobristHash(w, h)
     me = ManhattanEvaluator(w, h)
     board = Board([i for i in range(w * h)], w, h, 4, z)
     board.move(Direction.Up)
