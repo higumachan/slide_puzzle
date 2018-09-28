@@ -9,7 +9,7 @@ class Direction(Enum):
     Right = (0, 1)
 
 
-class ZoblistHash(object):
+class ZoblistHash:
     def __init__(self, w, h):
         self.table = np.random.randint(0, 1 << 63, (w * h, w * h, w * h), dtype=np.uint64)
 
@@ -17,7 +17,7 @@ class ZoblistHash(object):
         return functools.reduce(np.bitwise_xor, self.table[board.board.reshape(-1), np.arange(board.w * board.h), board.target_number])
 
 
-class Board(object):
+class Board:
     def __init__(self, numbers, w, h, target_number, hasher=None):
         self.w = w
         self.h = h

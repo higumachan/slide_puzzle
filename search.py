@@ -2,7 +2,7 @@ import copy
 from board import Board, Direction, ZoblistHash
 from evaluator import ManhattanEvaluator
 
-class BeamSearch(object):
+class BeamSearch:
     def __init__(self, board, evaluator, beam_width):
         self.board = board
         self.evaluator = evaluator

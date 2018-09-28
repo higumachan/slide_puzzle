@@ -2,7 +2,7 @@ import itertools
 import numpy as np
 
 
-class Evaluator(object):
+class Evaluator:
     def __init__(self, w, h):
         pass
     
@@ -10,7 +10,7 @@ class Evaluator(object):
         raise NotImplementedError
 
 
-class ManhattanEvaluator(object):
+class ManhattanEvaluator(Evaluator):
     def __init__(self, w, h):
         self.board_pos = np.array([(x, y) for y, x in itertools.product(range(h), range(w))])
         self.correct_board_pos = self.board_pos.reshape(w, h, -1)
