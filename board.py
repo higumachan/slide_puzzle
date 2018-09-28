@@ -18,17 +18,22 @@ class ZoblistHash(object):
 
 
 class Board(object):
-    def __init__(self, numbers, w, h, target_number, hasher):
+    def __init__(self, numbers, w, h, target_number, hasher=None):
         self.w = w
         self.h = h
         self.board = np.array(numbers).reshape((w, h))
         index = (self.board == target_number).argmax()
         self.target = np.array((index % w, index // w))
-        self.hasher = hasher
+        if hasher is None:
+            self.hasher = ZoblistHash(w, h)
+        else:
+            self.hasher = hasher
         self.target_number = target_number
 
     def move(self, direction):
         a = self.target + np.array(direction.value)
+        if (a < 0).any():
+            raise Exception('out of range')
         self.board[a[0], a[1]], self.board[self.target[0], self.target[1]] = self.board[self.target[0], self.target[1]], self.board[a[0], a[1]]
         self.target = a
 
@@ -38,6 +43,9 @@ class Board(object):
     def print_board(self):
         print(self.board)
 
+    def completed(self):
+        return (self.board.reshape(-1) == np.arange(self.w * self.h)).all()
+
 
 if __name__ == '__main__':
     np.random.seed(100)
@@ -45,9 +53,12 @@ if __name__ == '__main__':
     board = Board([0, 1, 2 ,3, 4, 5, 6, 7, 8], 3, 3, 4, z)
     board.print_board()
     print(hash(board))
+    print(board.completed())
     board.move(Direction.Up)
     board.print_board()
     print(hash(board))
+    print(board.completed())
     board = Board([0, 1, 2 ,3, 4, 5, 6, 7, 8], 3, 3, 6, z)
     board.print_board()
     print(hash(board))
+    print(board.completed())
