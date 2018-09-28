@@ -85,7 +85,7 @@ def main():
     optimizer.setup(model)
 
     # Load the MNIST dataset
-    train, test = RandomMoveBoardManhattanDataset(args.width, args.height, num=100000), RandomMoveBoardManhattanDataset(args.width, args.height, num=100)
+    train, test = RandomMoveBoardManhattanDataset(args.width, args.height, num=1000000, reset_num=1000), RandomMoveBoardManhattanDataset(args.width, args.height, num=10000, reset_num=1000)
 
     train_iter = chainer.iterators.SerialIterator(train, args.batchsize)
     test_iter = chainer.iterators.SerialIterator(test, args.batchsize,

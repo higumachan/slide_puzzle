@@ -32,13 +32,14 @@ class Board(object):
 
     def move(self, direction):
         a = self.target + np.array(direction.value)
-        if (a < 0).any():
-            raise Exception('out of range')
+        if (a < 0).any() or a[0] >= self.w or a[1] >= self.h:
+            return False
         self.board[a[0], a[1]], self.board[self.target[0], self.target[1]] = self.board[self.target[0], self.target[1]], self.board[a[0], a[1]]
         self.target = a
+        return True
 
     def __hash__(self):
-        return self.hasher(self)
+        return int(self.hasher(self))
 
     def print_board(self):
         print(self.board)
