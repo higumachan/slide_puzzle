@@ -1,5 +1,7 @@
 import copy
 from board import Board, Direction, ZobristHash
+import heapq
+
 from evaluator import ManhattanEvaluator
 
 class BeamSearch:
@@ -12,23 +14,20 @@ class BeamSearch:
     def search(self):
         states = [(self.evaluator(self.board), self.board, [])]
         while not self.is_complete(states):
-            nexts = self.next_states(states)
-            nexts.sort(key=lambda x: x[0])
-            states = nexts[:self.beam_width]
+            nexts = heapq.nsmallest(self.beam_width, self.next_states(states), key=lambda x: x[0])
+            states = nexts
             print(states[0][0])
-        return list(filter(lambda x: x[1].completed(), states))[0]
+        return next(filter(lambda x: x[1].completed(), states))
 
     def next_states(self, states):
-        results = []
         for state in states:
             for direction in Direction:
                 board = copy.deepcopy(state[1])
                 if board.move(direction):
                     hs = hash(board)
                     if hs not in self.visit_table:
-                        results.append((self.evaluator(board), board, state[2] + [direction]))
+                        yield (self.evaluator(board), board, state[2] + [direction])
                         self.visit_table.add(hs)
-        return results
 
     def is_complete(self, states):
         return any([state[1].completed() for state in states])
