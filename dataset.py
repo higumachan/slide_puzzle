@@ -1,7 +1,7 @@
 import random
 import chainer
 from chainer.dataset import DatasetMixin
-from board import Board, Direction, ZoblistHash
+from board import Board, Direction, ZobristHash
 from evaluator import ManhattanEvaluator
 import numpy as np
 
@@ -14,7 +14,7 @@ class RandomMoveBoardManhattanDataset(DatasetMixin):
         visit_table = set()
         self.xs = []
         self.y = []
-        zhash = ZoblistHash(w, h)
+        zhash = ZobristHash(w, h)
 
         for i in range(int(num / reset_num)):
             self.board = Board([j for j in range(w * h)], w, h, 0, hasher=zhash)
